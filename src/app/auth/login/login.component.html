@@ -20,11 +20,11 @@
   <form>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Enter your password">
+      <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
     </div>
 
     <button id="downloadCvButton" class="button">
@@ -36,7 +36,7 @@
 
   </form>
   <div class="text-center mt-5">
-    Don't have an account? <a href="pages-sign-up.html">Sign up</a>
+    Don't have an account? <a routerLink="/register">Sign up</a>
   </div>
 </div>
 

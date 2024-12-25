@@ -6,35 +6,67 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+  <title>Sign Up</title>
 </head>
 <body>
-
+<div class="mt-5"></div>
 <div class="container">
-  <div class="text-center mt-4">
-    <h1 class="h2">Sign Up</h1>
+  <div class="text-center">
+    <h1 class="h2">Create New Account</h1>
   </div>
-  <form>
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
     <div class="form-group">
-      <label for="fullName">Full name</label>
-      <input type="text" class="form-control" id="fullName" placeholder="Enter your name">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        [(ngModel)]="model.name"
+        name="name"
+        placeholder="Enter your name"
+        required>
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter your email">
+      <label for="email">Email </label>
+      <input
+        type="email"
+        id="email"
+        class="form-control"
+        [(ngModel)]="model.email"
+        name="email"
+        placeholder="Enter your email"
+        required>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" placeholder="Enter your password">
+      <label for="password">Passcode</label>
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        [(ngModel)]="model.password"
+        name="password"
+        placeholder="Enter your passcode"
+        required>
     </div>
-    <button id="downloadCvButton" class="button">
-            <span class="ico-circle">
-                <i class="fas fa-user-plus"></i>
-            </span>
-      Sign Up
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input
+        type="number"
+        id="age"
+        class="form-control"
+        [(ngModel)]="model.age"
+        name="age"
+        placeholder="Enter your age"
+        required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-user-plus"></i> Register
     </button>
   </form>
-  <div class="text-center mt-5">
-    Already have account?<a href="pages-sign-up.html">Log In</a>
+
+  <div class="footer">
+    Already have an account? <a routerLink="/login">Log In</a>
   </div>
 </div>
 
