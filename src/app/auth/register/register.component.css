@@ -1,0 +1,28 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+.container {
+  width: 100%;
+  max-width: 400px; /* Largeur maximale du conteneur */
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.button {
+  width: 100%; /* Prend toute la largeur du conteneur */
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.button:hover {
+  background-color: #0056b3; /* Couleur au survol */
+}
