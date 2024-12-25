@@ -17,14 +17,14 @@
       Sign in to your account to continue
     </p>
   </div>
-  <form>
+  <form (submit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email" placeholder="Enter your email">
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+      <input type="password" class="form-control" id="password" [(ngModel)]="model.password" name="password" placeholder="Enter your password">
     </div>
 
     <button id="downloadCvButton" class="button">

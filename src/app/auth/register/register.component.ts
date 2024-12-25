@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from "../../core/services/auth/auth.service";
 import { RegisterRequest } from "../../core/models/auth/register-request";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent {
     active: true
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit(): void {
     console.log('Submitting:', this.model);
@@ -25,6 +26,7 @@ export class RegisterComponent {
       next: (response: RegisterRequest) => {
         console.log('Registration successful', response);
         this.resetForm();
+        this.router.navigate(['/login']);
       },
       error: (error: any) => {
         console.error('Registration failed:', error);
