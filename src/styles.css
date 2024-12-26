@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.custom-toast-success {
+  background-color: #28a745; /* Couleur de fond pour le succès */
+  color: white; /* Couleur du texte */
+  border-radius: 5px; /* Coins arrondis */
+}
+
+.custom-toast-error {
+  background-color: #dc3545; /* Couleur de fond pour l'erreur */
+  color: white; /* Couleur du texte */
+  border-radius: 5px; /* Coins arrondis */
+}

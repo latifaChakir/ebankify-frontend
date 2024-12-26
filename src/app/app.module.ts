@@ -5,16 +5,26 @@ import { LayoutsModule } from './layouts/layouts.module';
 import {AuthModule} from "./auth/auth.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {provideHttpClient} from "@angular/common/http";
+import {ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
+
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     LayoutsModule,
-    AuthModule
+    AuthModule,
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      toastClass: 'custom-toast',
+    }),
+    BrowserAnimationsModule,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent]
