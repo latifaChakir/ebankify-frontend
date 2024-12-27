@@ -8,6 +8,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AdminModule} from "./admin/admin.module";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserModule,
     LayoutsModule,
     AuthModule,
+    AdminModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

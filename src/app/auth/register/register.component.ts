@@ -26,54 +26,42 @@ export class RegisterComponent {
   onSubmit(): void {
     this.authService.register(this.model).subscribe({
       next: () => {
-        this.toastr.success('Registration successful!', 'Success', {
-          positionClass: 'toast-bottom-right',
-          timeOut: 5000,
-          progressBar: true,
-          closeButton: true,
-          toastClass: 'custom-toast-success',
-        });
-        this.router.navigate(['/login']);
-      },
-      error: (error: any) => {
-        if (error && typeof error === 'object') {
-          if (error.details) {
-            for (const message of Object.values(error.details)) {
-              this.toastr.error(message as string, '', {
-                positionClass: 'toast-top-right',
-                timeOut: 5000,
-                progressBar: true,
-                closeButton: true,
-                toastClass: 'custom-toast-error',
-              });
-            }
-          } else if (error.message) {
-            this.toastr.error(error.message, 'Error', {
-              positionClass: 'toast-top-right',
-              timeOut: 5000,
-              progressBar: true,
-              closeButton: true,
-              toastClass: 'custom-toast-error',
-            });
-          } else {
-            this.toastr.error('An unexpected error occurred.', 'Error', {
-              positionClass: 'toast-top-right',
-              timeOut: 5000,
-              progressBar: true,
-              closeButton: true,
-              toastClass: 'custom-toast-error',
-            });
-          }
-        } else {
-          this.toastr.error('An unexpected error occurred.', 'Error', {
+        this.toastr.success(
+          `<i class="fas fa-check toast-icon"></i> Registration successful!`,
+          '',
+          {
             positionClass: 'toast-top-right',
             timeOut: 5000,
             progressBar: true,
             closeButton: true,
-            toastClass: 'custom-toast-error',
-          });
-        }
+            toastClass: 'toast custom-toast-success',
+            enableHtml: true
+          }
+        );
+        this.router.navigate(['/login']);
       },
+      error: (error: any) => {
+        let message = 'An unexpected error occurred.';
+        if (error && typeof error === 'object') {
+          if (error.details) {
+            message = Object.values(error.details).join(', ');
+          } else if (error.message) {
+            message = error.message;
+          }
+        }
+        this.toastr.error(
+          ` <i class="fas fa-times toast-icon mx-1"></i> ${message}`,
+          '',
+          {
+            positionClass: 'toast-top-right',
+            timeOut: 5000,
+            progressBar: true,
+            closeButton: true,
+            toastClass: 'toast custom-toast-error',
+            enableHtml: true
+          }
+        );
+      }
     });
   }
 
