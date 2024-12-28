@@ -8,7 +8,12 @@
         <div class="card my-4">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="d-flex justify-content-between">
               <h6 class="text-white text-capitalize ps-3">Users table</h6>
+                <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                  <span class="material-symbols-rounded mx-3 text-white">add</span>
+                </button>
+              </div>
             </div>
           </div>
           <div class="card-body px-0 pb-2">
@@ -16,40 +21,54 @@
               <table class="table align-items-center mb-0">
                 <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Author</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Function</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Age</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
                   <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th>
-                  <th class="text-secondary opacity-7"></th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">monthlyIncome</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">creditScore</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr *ngFor="let user of users">
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div>
                         <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3 border-radius-lg" alt="user6">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                        <p class="text-xs text-secondary mb-0">miriam-tim.com</p>
+                        <h6 class="mb-0 text-sm">{{ user.name }}</h6>
+                        <p class="text-xs text-secondary mb-0">{{ user.email }}</p>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <p class="text-xs font-weight-bold mb-0">Programator</p>
-                    <p class="text-xs text-secondary mb-0">Developer</p>
+                    <p class="text-xs font-weight-bold mb-0">{{ user.age }}</p>
+                  </td>
+                  <td>
+                    <p li *ngFor="let role of user.roles" class="text-xs font-weight-bold mb-0">{{ role.name }}</p>
                   </td>
                   <td class="align-middle text-center text-sm">
-                    <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                    <span
+                      class="badge badge-sm"
+                      [ngClass]="user.active ? 'bg-gradient-success' : 'bg-gradient-secondary'">
+                      {{ user.active ? 'Online' : 'Offline' }}
+                    </span>
                   </td>
                   <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
+                    <span class="text-secondary text-xs font-weight-bold">{{ user.monthlyIncome }}</span>
                   </td>
-                  <td class="align-middle">
-                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                      Edit
-                    </a>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ user.creditScore }}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <button (click)="editUser(user) "class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="material-symbols-rounded text-warning">edit</span>
+                    </button>
+                    <button (click)="deleteUser(user.id)" class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                      <span class="material-symbols-rounded mx-1 text-danger">delete</span>
+                    </button>
                   </td>
                 </tr>
                 </tbody>
@@ -62,4 +81,53 @@
   </div>
 </main>
 
+<div *ngIf="showModal" class="modal">  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
 
+      </div>
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <form (ngSubmit)="saveUser(selectedUser)">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedUser.name" name="name" id="name" placeholder="Enter name" required>
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" class="form-control" id="userEmail" [(ngModel)]="selectedUser.email" name="email" placeholder="Enter email" required>
+          </div>
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" class="form-control" [(ngModel)]="selectedUser.age" name="age" placeholder="Enter age" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" class="form-control" name="password"[(ngModel)]="selectedUser.password" placeholder="Enter passcode" required>
+          </div>
+          <div class="form-group">
+            <label>Monthly Income</label>
+            <input type="number" id="monthlyIncome" class="form-control" name="monthlyIncome" [(ngModel)]="selectedUser.monthlyIncome" placeholder="Enter monthly income" required>
+          </div>
+          <div class="form-group">
+            <label>Credit Score</label>
+            <input type="number" id="creditScore" class="form-control" name="creditScore" [(ngModel)]="selectedUser.creditScore" placeholder="Enter your credit score" required>
+          </div>
+          <div class="form-group">
+            <label for="roles">Role</label>
+            <select id="roles" class="form-control" name="roles"  [(ngModel)]="selectedUser.roles" multiple required>
+              <option [value]="1">Admin</option>
+              <option [value]="2">User</option>
+              <option [value]="3">Employee</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="saveUserButton">Save User</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

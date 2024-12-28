@@ -2,6 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["@types/jquery"],
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
