@@ -26,8 +26,8 @@ export class UserManagementComponent implements OnInit {
     password: '',
     roles: [],
     active: true,
-    creditScore: 0,
-    monthlyIncome: 0
+    creditScore: null,
+    monthlyIncome: null
   };
 
   loadUsers(): void {
@@ -82,8 +82,8 @@ export class UserManagementComponent implements OnInit {
       password: '',
       roles: [],
       active: true,
-      creditScore: 0,
-      monthlyIncome: 0
+      creditScore: null,
+      monthlyIncome: null
     };
   }
 }

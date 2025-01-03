@@ -6,6 +6,6 @@ export interface User {
   password: string;
   roles: number[];
   active : boolean;
-  creditScore: number;
-  monthlyIncome :number;
+  creditScore: number | null;
+  monthlyIncome :number | null;
 }

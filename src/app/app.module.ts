@@ -10,6 +10,7 @@ import {ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AdminModule} from "./admin/admin.module";
 import {authInterceptor} from "./core/interceptors/auth.interceptor";
+import {UserModule} from "./user/user.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {authInterceptor} from "./core/interceptors/auth.interceptor";
     LayoutsModule,
     AuthModule,
     AdminModule,
+    UserModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
