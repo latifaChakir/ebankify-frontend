@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {User} from "../../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,9 @@ export class UserService {
 
   deleteUser(userId: number): Observable<any> {
     return this.http.delete<any>(`${this.api}/delete/${userId}`);
+  }
+  getUserById(userId: number): Observable<{ user: User }> {
+    return this.http.get<{ user: User }>(`${this.api}/${userId}`);
   }
 
 }

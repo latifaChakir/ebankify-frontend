@@ -1,13 +1,16 @@
-enum AccountStatus {
+import {User} from "./user";
+import {Bank} from "./bank";
+
+export enum AccountStatus {
   ACTIVE = "ACTIVE",
   BLOCKED = "BLOCKED",
 }
 
 export interface Account {
   id?: number;
-  balance: number;
+  balance: number | null;
   accountNumber: string;
   status: AccountStatus;
-  userId?: number | null;
-  bankId?: number | null;
+  user?: User;
+  bank?: Bank;
 }

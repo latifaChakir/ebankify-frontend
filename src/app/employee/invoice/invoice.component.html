@@ -1,0 +1,118 @@
+<app-side></app-side>
+<main class="main-content position-relative max-height-vh-100 h-100
+ border-radius-lg " style="margin-left:240px ">
+  <app-nav></app-nav>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="d-flex justify-content-between">
+                <h6 class="text-white text-capitalize ps-3">Invoices table</h6>
+                <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                  <span class="material-symbols-rounded mx-3 text-white">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">amount</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">due Date</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">status</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let invoice of invoices">
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ invoice.user?.name || 'N/A' }}</span>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="align-middle ">
+                    <span class="text-secondary text-xs font-weight-bold">{{ invoice.amountDue}}</span>
+                  </td>
+
+                  <td class="align-middle ">
+                    <span class="text-secondary text-xs font-weight-bold">{{ invoice.dueDate}}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                      <span
+                        [ngClass]="{
+                          'text-danger': invoice.status === 'UNPAID',
+                          'text-success': invoice.status === 'PAID',
+                          'text-warning': invoice.status === 'OVERDUE'
+                        }"
+                        class="text-xs font-weight-bold">
+                        {{ invoice.status }}
+                      </span>
+                  </td>
+
+                  <td class="align-middle text-center">
+                    <button (click)="editInvoice(invoice)"  class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="material-symbols-rounded text-warning">edit</span>
+                    </button>
+                    <button
+                      class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                      <span class="material-symbols-rounded mx-1 text-danger">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<div *ngIf="showModal" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+      </div>
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <form (ngSubmit)="saveInvoice(selectedInvoice)">
+          <div class="form-group">
+            <label for="userSelect">Select User</label>
+            <select id="userSelect" class="form-control" [(ngModel)]="selectedInvoice.user" name="userId" required>
+              <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="amountDue">Amount Due</label>
+            <input type="number" id="amountDue" class="form-control" name="amountDue" [(ngModel)]="selectedInvoice.amountDue" placeholder="Enter amount due" required>
+          </div>
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input type="datetime-local" id="dueDate" class="form-control" name="dueDate" [(ngModel)]="selectedInvoice.dueDate" required>
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" class="form-control" name="status" [(ngModel)]="selectedInvoice.status" required>
+              <option value="UNPAID">UNPAID</option>
+              <option value="PAID">PAID</option>
+              <option value="OVERDUE">OVERDUE</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="saveUserButton">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -2,5 +2,115 @@
 <main class="main-content position-relative max-height-vh-100 h-100
  border-radius-lg " style="margin-left:240px ">
   <app-nav></app-nav>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="d-flex justify-content-between">
+                <h6 class="text-white text-capitalize ps-3">Accounts table</h6>
+                <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                  <span class="material-symbols-rounded mx-3 text-white">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Bank Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">User</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">AccountNumber</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Balance</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let account of accounts">
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ account.bank?.name || 'N/A' }}</span>
+                      </td>
+                     </div>
+                  </td>
+                  <td class="align-middle ">
+                    <span class="text-secondary text-xs font-weight-bold">{{ account.user?.name || 'N/A' }}</span>
+                  </td>
+                  <td class="align-middle">
+                    <span class="text-secondary text-xs font-weight-bold">{{ account.accountNumber }}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ account.balance }}</span>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                    <span
+                      class="badge badge-sm"
+                      [ngClass]="account.status ? 'bg-gradient-success' : 'bg-gradient-secondary'">
+                      {{ account.status ? 'ACTIVE' : 'BLOCKED' }}
+                    </span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <button (click)="editAccount(account)"  class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="material-symbols-rounded text-warning">edit</span>
+                    </button>
+                    <button  (click)="account.id ? deleteAccount(account.id) : null"
+                               class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                      <span class="material-symbols-rounded mx-1 text-danger">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </main>
+
+<div *ngIf="showModal" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Add Account</h5>
+      </div>
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <form (ngSubmit)="saveAccount(selectedAccount)">
+          <div class="form-group">
+            <label for="accountNumber">Account Number</label>
+            <input type="text" class="form-control" [(ngModel)]="selectedAccount.accountNumber" name="accountNumber" id="accountNumber" placeholder="Enter account number" required>
+          </div>
+          <div class="form-group">
+            <label for="balance">Balance</label>
+            <input type="number" class="form-control" [(ngModel)]="selectedAccount.balance" name="balance" id="balance" placeholder="Enter balance" required>
+          </div>
+          <div class="form-group">
+            <label for="user">User</label>
+            <select id="user" class="form-control" name="userId" [(ngModel)]="selectedAccount.user" required>
+              <option *ngFor="let user of users" [ngValue]="user">{{ user.name }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="bank">Bank</label>
+            <select id="bank" class="form-control" name="bankId" [(ngModel)]="selectedAccount.bank" required>
+              <option *ngFor="let bank of banks" [ngValue]="bank">{{ bank.name }}</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button (click)="closeModal()" type="button" class="btn btn-secondary">Close</button>
+            <button type="submit" class="btn btn-primary" id="saveUserButton">Save Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 

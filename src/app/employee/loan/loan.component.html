@@ -1,0 +1,162 @@
+<app-side></app-side>
+<main class="main-content position-relative max-height-vh-100 h-100
+ border-radius-lg " style="margin-left:240px ">
+  <app-nav></app-nav>
+  <div class="container-fluid py-2">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+              <div class="d-flex justify-content-between">
+                <h6 class="text-white text-capitalize ps-3">Loans table</h6>
+                <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                  <span class="material-symbols-rounded mx-3 text-white">add</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Principal</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Interest Rate</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">term Months</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">approved?</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let loan of loans">
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ loan.user?.name || 'N/A' }}</span>
+                      </td>
+                    </div>
+                  </td>
+                  <td class="align-middle ">
+                    <span class="text-secondary text-xs font-weight-bold">{{ loan.principal }}</span>
+                  </td>
+                  <td class="align-middle">
+                    <span class="text-secondary text-xs font-weight-bold">{{ loan.interestRate }}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ loan.termMonths }}</span>
+                  </td>
+                  <td class="align-middle text-center">
+                    <span
+                      [ngClass]="{
+                        'text-success': loan.approved,
+                        'text-danger': !loan.approved
+                      }"
+                      class="text-xs font-weight-bold"
+                    >
+                      {{ loan.approved ? 'Yes' : 'No' }}
+                    </span>
+                  </td>
+
+                  <td class="align-middle text-center">
+                    <button (click)="editLoan(loan)"  class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                      <span class="material-symbols-rounded text-warning">edit</span>
+                    </button>
+                    <button (click)="loan.id?  deleteLoan(loan.id) : null"
+                      class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                      <span class="material-symbols-rounded mx-1 text-danger">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+<div *ngIf="showModal" class="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loanModalLabel">Manage Loan</h5>
+      </div>
+      <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+        <form (ngSubmit)="saveLoan(selectedLoan)">
+          <div class="form-group">
+            <label for="principal">Principal Amount</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedLoan.principal"
+              name="principal"
+              id="principal"
+              placeholder="Enter principal amount"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="interestRate">Interest Rate (%)</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedLoan.interestRate"
+              name="interestRate"
+              id="interestRate"
+              placeholder="Enter interest rate"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="termMonths">Term (Months)</label>
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedLoan.termMonths"
+              name="termMonths"
+              id="termMonths"
+              placeholder="Enter loan term in months"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="approved">Approved</label>
+            <select
+              id="approved"
+              class="form-control"
+              [(ngModel)]="selectedLoan.approved"
+              name="approved"
+              required
+            >
+              <option [value]="true">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="user">User</label>
+            <select
+              id="user"
+              class="form-control"
+              [(ngModel)]="selectedLoan.user"
+              name="user"
+              required
+            >
+              <option *ngFor="let user of users" [ngValue]="user">
+                {{ user.name }}
+              </option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button type="submit" class="btn btn-primary">Save Loan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

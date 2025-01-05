@@ -11,6 +11,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AdminModule} from "./admin/admin.module";
 import {authInterceptor} from "./core/interceptors/auth.interceptor";
 import {UserModule} from "./user/user.module";
+import {EmployeeModule} from "./employee/employee.module";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {UserModule} from "./user/user.module";
     AuthModule,
     AdminModule,
     UserModule,
+    EmployeeModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

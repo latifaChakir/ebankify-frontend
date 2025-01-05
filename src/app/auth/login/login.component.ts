@@ -41,6 +41,7 @@ export class LoginComponent {
         const token = response.user.token;
         localStorage.setItem('token', token);
         localStorage.setItem('username', response.user.name);
+        localStorage.setItem('userId', response.user.id);
         localStorage.setItem('role', response.user.roles[0].name);
         if (response.user.roles[0].name === 'USER') {
           console.log('User logged in');
