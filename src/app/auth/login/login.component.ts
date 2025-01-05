@@ -50,6 +50,8 @@ export class LoginComponent {
           console.log('EMPLOYEE logged in');
         } else if (response.user.roles[0].name === 'ADMIN') {
           console.log('ADMIN logged in');
+          this.router.navigate(['/users']);
+
         }
       else {
           console.error('Invalid response structure:', response);

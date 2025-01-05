@@ -4,14 +4,15 @@ import {AppComponent} from "./app.component";
 import { LayoutsModule } from './layouts/layouts.module';
 import {AuthModule} from "./auth/auth.module";
 import {AppRoutingModule} from "./app-routing.module";
-import {HTTP_INTERCEPTORS, provideHttpClient} from "@angular/common/http";
-import {ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
+import {HTTP_INTERCEPTORS, provideHttpClient,withInterceptors } from "@angular/common/http";
+import {ToastrModule} from "ngx-toastr";
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AdminModule} from "./admin/admin.module";
 import {authInterceptor} from "./core/interceptors/auth.interceptor";
 import {UserModule} from "./user/user.module";
 import {EmployeeModule} from "./employee/employee.module";
+import {errorInterceptor} from "./core/interceptors/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -33,12 +34,11 @@ import {EmployeeModule} from "./employee/employee.module";
     }),
     BrowserAnimationsModule,
   ],
-  providers: [provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useValue: authInterceptor,
-      multi: true
-    }],
+  providers: [
+    provideHttpClient(
+      withInterceptors([authInterceptor, errorInterceptor])
+    ),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
