@@ -4,12 +4,14 @@ import {UserManagementComponent} from "./user-management/user-management.compone
 import {sessionGuard} from "../core/guards/session.guard";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {roleGuard} from "../core/guards/role.guard";
+import {BankComponent} from "./bank/bank.component";
 
 const routes: Routes = [
   {path : "users" , component :UserManagementComponent,
-    data: { role: 'ADMIN' }, canActivate: [roleGuard],canActivateChild: [sessionGuard]
+    data: { role: 'ADMIN' }, canActivate: [roleGuard], canActivateChild: [sessionGuard]
   },
   {path: "dashboard", component :DashboardComponent},
+  {path: "banks", component :BankComponent},
 ];
 
 @NgModule({

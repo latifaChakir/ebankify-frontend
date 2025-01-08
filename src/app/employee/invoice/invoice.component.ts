@@ -67,13 +67,17 @@ export class InvoiceComponent implements OnInit{
   }
 
   saveInvoice(invoice: Invoice): void {
+    const payload = {
+      ...invoice,
+      userId : invoice.user?.id
+    };
     if (this.selectedInvoice.id) {
-      this.invoiceService.updateInvoice(this.selectedInvoice.id, invoice).subscribe(() => {
+      this.invoiceService.updateInvoice(this.selectedInvoice.id, payload).subscribe(() => {
         this.loadInvoices();
         this.closeModal();
       });
     } else {
-      this.invoiceService.createInvoice(invoice).subscribe(() => {
+      this.invoiceService.createInvoice(payload).subscribe(() => {
         this.loadInvoices();
         this.closeModal();
       });

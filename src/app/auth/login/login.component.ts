@@ -45,7 +45,7 @@ export class LoginComponent {
         localStorage.setItem('role', response.user.roles[0].name);
         if (response.user.roles[0].name === 'USER') {
           console.log('User logged in');
-          this.router.navigate(['/users']);
+          this.router.navigate(['/profil']);
         } else if (response.user.roles[0].name === 'EMPLOYEE') {
           console.log('EMPLOYEE logged in');
         } else if (response.user.roles[0].name === 'ADMIN') {

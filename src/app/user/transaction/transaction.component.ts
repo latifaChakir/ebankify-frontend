@@ -71,13 +71,19 @@ import {FormsModule} from "@angular/forms";
   }
 
   saveTransaction(transaction: Transaction): void {
+    const payload = {
+      ...transaction,
+      sourceAccountId: transaction.sourceAccount?.id,
+      destinationAccountId: transaction.destinationAccount?.id,
+    };
+
     if (this.selectedTransaction.id) {
-      this.transactionService.updateTransaction(this.selectedTransaction.id, transaction).subscribe(() => {
+      this.transactionService.updateTransaction(this.selectedTransaction.id, payload).subscribe(() => {
         this.loadTransactions();
         this.closeModal();
       });
     } else {
-      this.transactionService.createTransaction(transaction).subscribe(() => {
+      this.transactionService.createTransaction(payload).subscribe(() => {
         this.loadTransactions();
         this.closeModal();
       });

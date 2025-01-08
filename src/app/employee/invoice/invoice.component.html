@@ -87,7 +87,7 @@
           <div class="form-group">
             <label for="userSelect">Select User</label>
             <select id="userSelect" class="form-control" [(ngModel)]="selectedInvoice.user" name="userId" required>
-              <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+              <option *ngFor="let user of users" [ngValue]="user">{{ user.name }}</option>
             </select>
           </div>
           <div class="form-group">

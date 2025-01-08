@@ -89,11 +89,10 @@ export class AccountComponent implements OnInit {
     );
   }
   saveAccount(account: Account) {
-    // Map the user and bank objects to their respective IDs
     const payload = {
       ...account,
-      userId: account.user?.id, // Extract the user ID
-      bankId: account.bank?.id, // Extract the bank ID
+      userId: account.user?.id,
+      bankId: account.bank?.id, 
     };
 
     if (this.selectedAccount.id) {

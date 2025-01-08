@@ -120,13 +120,13 @@
           </div>
           <div class="form-group">
             <label for="sourceAccount">Source Account</label>
-            <select class="form-control" id="sourceAccount" [(ngModel)]="selectedTransaction.sourceAccount" name="sourceAccount" required>
+            <select class="form-control" id="sourceAccount" [(ngModel)]="selectedTransaction.sourceAccount" name="sourceAccountId" required>
               <option *ngFor="let account of accounts" [ngValue]="account">{{ account.accountNumber }}</option>
             </select>
           </div>
           <div class="form-group">
             <label for="destinationAccount">Destination Account</label>
-            <select class="form-control" id="destinationAccount" [(ngModel)]="selectedTransaction.destinationAccount" name="destinationAccount" required>
+            <select class="form-control" id="destinationAccount" [(ngModel)]="selectedTransaction.destinationAccount" name="destinationAccountId" required>
               <option *ngFor="let account of accounts" [ngValue]="account">{{ account.accountNumber }}</option>
             </select>
           </div>

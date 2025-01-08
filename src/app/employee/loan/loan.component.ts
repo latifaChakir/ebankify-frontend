@@ -68,13 +68,17 @@ ngOnInit() {
   }
 
   saveLoan(loan: Loan): void {
+    const payload = {
+      ...loan,
+      userId :loan.user?.id
+    }
     if (this.selectedLoan.id) {
-      this.loanService.updateLoan(this.selectedLoan.id, loan).subscribe(() => {
+      this.loanService.updateLoan(this.selectedLoan.id, payload).subscribe(() => {
         this.loadLoans();
         this.closeModal();
       });
     } else {
-      this.loanService.createLoan(loan).subscribe(() => {
+      this.loanService.createLoan(payload).subscribe(() => {
         this.loadLoans();
         this.closeModal();
       });
