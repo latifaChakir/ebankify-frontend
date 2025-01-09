@@ -91,12 +91,13 @@
             <label for="balance">Balance</label>
             <input type="number" class="form-control" [(ngModel)]="selectedAccount.balance" name="balance" id="balance" placeholder="Enter balance" required>
           </div>
-          <div class="form-group">
+          <div class="form-group" *ngIf="isAdmin">
             <label for="user">User</label>
-            <select id="user" class="form-control" name="userId" [(ngModel)]="selectedAccount.user" required>
+            <select  id="user" class="form-control" name="userId" [(ngModel)]="selectedAccount.user" required>
               <option *ngFor="let user of users" [ngValue]="user">{{ user.name }}</option>
             </select>
           </div>
+          <input *ngIf="!isAdmin" type="hidden" [(ngModel)]="selectedAccount.user" name="userId">
           <div class="form-group">
             <label for="bank">Bank</label>
             <select id="bank" class="form-control" name="bankId" [(ngModel)]="selectedAccount.bank" required>

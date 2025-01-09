@@ -9,6 +9,7 @@ import {User} from "../../core/models/user";
 import {UserService} from "../../core/services/user/user.service";
 import {Bank} from "../../core/models/bank";
 import {BankService} from "../../core/services/bank/bank.service";
+import {AuthService} from "../../core/services/auth/auth.service";
 
 @Component({
   selector: 'app-account',
@@ -30,18 +31,9 @@ export class AccountComponent implements OnInit {
   loading: boolean = false;
   error: string | null = null;
   showModal: boolean = false;
+  isAdmin: boolean = false;
   users: User[] = [];
   banks: Bank[] = [];
-
-  constructor(private accountServce : AccountService,
-              private userService: UserService,
-              private bankService : BankService) {}
-
-  ngOnInit() {
-    this.loadAccounts();
-    this.loadUsers();
-    this.loadBanks();
-  }
   selectedAccount: Account = {
     balance: null,
     accountNumber: '',
@@ -49,9 +41,24 @@ export class AccountComponent implements OnInit {
     user: undefined,
     bank: undefined
   };
+
+  constructor(
+    private accountService: AccountService,
+    private userService: UserService,
+    private bankService: BankService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.loadAccounts();
+    this.loadUsers();
+    this.loadBanks();
+    this.isAdmin = this.authService.getRole() === 'ADMIN';
+  }
+
   loadAccounts(): void {
     this.loading = true;
-    this.accountServce.getAllAccounts().subscribe(
+    this.accountService.getAllAccounts().subscribe(
       (response) => {
         this.accounts = response.accounts;
         this.loading = false;
@@ -62,79 +69,104 @@ export class AccountComponent implements OnInit {
       }
     );
   }
+
   loadBanks(): void {
-    this.loading = true;
     this.bankService.getAllBanks().subscribe(
       (response) => {
         this.banks = response;
-        this.loading = false;
       },
       (error) => {
         this.error = 'Erreur lors du chargement des banques';
-        this.loading = false;
       }
     );
   }
+
   loadUsers(): void {
-    this.loading = true;
     this.userService.getAllUsers().subscribe(
       (data) => {
         this.users = data;
-        this.loading = false;
       },
       (error) => {
         this.error = 'Erreur lors du chargement des utilisateurs';
-        this.loading = false;
       }
     );
   }
-  saveAccount(account: Account) {
-    const payload = {
-      ...account,
-      userId: account.user?.id,
-      bankId: account.bank?.id, 
-    };
 
-    if (this.selectedAccount.id) {
-      this.accountServce.updateAccount(this.selectedAccount.id, payload).subscribe(
-        () => {
-          this.loadAccounts();
-          this.closeModal();
-        },
-        (error) => {
-          this.error = 'Erreur lors de la mise à jour du compte';
+  async saveAccount(account: Account) {
+    try {
+      const payload: any = {
+        ...account,
+        userId: account.user?.id,
+        bankId: account.bank?.id,
+      };
+
+      if (!this.isAdmin) {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+          const response = await this.userService.getUserById(Number(userId)).toPromise();
+          if (response?.user?.id) {
+            payload.userId = response.user.id;
+          } else {
+            this.error = "Utilisateur introuvable ou réponse invalide";
+            return;
+          }
+        } else {
+          this.error = "Utilisateur non identifié";
+          return;
         }
-      );
-    } else {
-      this.accountServce.saveAccount(payload).subscribe(
-        () => {
-          this.loadAccounts();
-          this.closeModal();
-        },
-        (error) => {
-          this.error = 'Erreur lors de la création du compte';
-        }
-      );
+      }
+
+      if (this.selectedAccount.id) {
+        this.accountService.updateAccount(this.selectedAccount.id, payload).subscribe(
+          () => {
+            this.loadAccounts();
+            this.closeModal();
+          },
+          () => {
+            this.error = 'Erreur lors de la mise à jour du compte';
+          }
+        );
+      } else {
+        this.accountService.saveAccount(payload).subscribe(
+          () => {
+            this.loadAccounts();
+            this.closeModal();
+          },
+          () => {
+            this.error = 'Erreur lors de la création du compte';
+          }
+        );
+      }
+    } catch (error) {
+      this.error = "Erreur lors de la récupération des informations utilisateur";
     }
   }
+
   editAccount(account: Account) {
-    this.selectedAccount = { ...account };
+    this.selectedAccount = {
+      ...account,
+      user: this.users.find(user => user.id === account.user?.id),
+      bank: this.banks.find(bank => bank.id === account.bank?.id)
+    };
     this.openModal();
   }
 
-  deleteAccount(accountid: number) {
-    this.accountServce.deleteAccount(accountid).subscribe(()=>{
+  deleteAccount(accountId: number) {
+    this.accountService.deleteAccount(accountId).subscribe(() => {
       this.loadAccounts();
     });
   }
 
-  openModal(): void
-  {
+  openModal(): void {
     this.showModal = true;
   }
 
   closeModal(): void {
     this.showModal = false;
+    this.resetSelectedAccount();
+  }
+
+  private resetSelectedAccount(): void {
     this.selectedAccount = {
       balance: null,
       accountNumber: '',
@@ -143,6 +175,4 @@ export class AccountComponent implements OnInit {
       bank: undefined
     };
   }
-
-
 }

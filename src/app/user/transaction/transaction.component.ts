@@ -91,9 +91,15 @@ import {FormsModule} from "@angular/forms";
   }
 
   editTransaction(transaction: Transaction): void {
-    this.selectedTransaction = { ...transaction };
+    this.selectedTransaction = {
+      ...transaction,
+      sourceAccount: this.accounts.find(account => account.id === transaction.sourceAccount?.id),
+      destinationAccount: this.accounts.find(account => account.id === transaction.destinationAccount?.id),
+    };
     this.openModal();
   }
+
+
 
   deleteTransaction(transactionId: number): void {
     this.transactionService.deleteTransaction(transactionId).subscribe(() => {

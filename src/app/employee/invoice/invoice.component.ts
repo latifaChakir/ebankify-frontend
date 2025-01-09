@@ -85,7 +85,9 @@ export class InvoiceComponent implements OnInit{
   }
 
   editInvoice(invoice: Invoice): void {
-    this.selectedInvoice = { ...invoice };
+    this.selectedInvoice = { ...invoice ,
+      user: this.users.find(user => user.id === invoice.user?.id),
+    };
     this.openModal();
   }
 

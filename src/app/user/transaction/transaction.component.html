@@ -130,7 +130,8 @@
               <option *ngFor="let account of accounts" [ngValue]="account">{{ account.accountNumber }}</option>
             </select>
           </div>
-          <div class="form-group">
+          <!-- Champ de date pour la prochaine exécution -->
+          <div class="form-group" *ngIf="selectedTransaction.type === TransactionType.SCHEDULED">
             <label for="nextExecutionDate">Next Execution Date</label>
             <input type="date" class="form-control" id="nextExecutionDate" [(ngModel)]="selectedTransaction.nextExecutionDate" name="nextExecutionDate" required>
           </div>

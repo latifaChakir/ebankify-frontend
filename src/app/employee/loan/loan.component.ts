@@ -86,7 +86,9 @@ ngOnInit() {
   }
 
   editLoan(loan: Loan): void {
-    this.selectedLoan = { ...loan };
+    this.selectedLoan = { ...loan,
+      user: this.users.find(user => user.id === loan.user?.id),
+    };
     this.openModal();
   }
 
