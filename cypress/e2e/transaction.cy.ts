@@ -69,4 +69,18 @@ describe('Gestion des transactions E2E', () => {
       .should('be.visible')
       .and('contain', 'Erreur lors du chargement des transactions');
   });
+  it('doit afficher un indicateur de chargement pendant le chargement des transactions', () => {
+    cy.intercept('GET', '/api/transactions/all', {
+      delay: 2000,
+      body: [],
+    }).as('getTransactionsDelayed');
+
+    cy.visit('/transactions');
+
+    cy.get('.loading-indicator').should('be.visible');
+
+    cy.wait('@getTransactionsDelayed');
+
+    cy.get('.loading-indicator').should('not.exist');
+  });
 });

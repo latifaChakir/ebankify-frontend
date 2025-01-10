@@ -3,6 +3,10 @@
  border-radius-lg " style="margin-left:240px ">
   <app-nav></app-nav>
   <div class="container-fluid py-2">
+    <div *ngIf="error" class="error-message alert alert-danger alert-dismissible fade show" role="alert">
+      {{ error }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <div class="row">
       <div class="col-12">
         <div class="card my-4">
@@ -17,6 +21,12 @@
             </div>
           </div>
           <div class="card-body px-0 pb-2">
+            <div *ngIf="loading" class="loading-indicator text-center py-3">
+              <span>Chargement en cours...</span>
+            </div>
+            <div *ngIf="!loading && transactions.length === 0" class="text-center py-3">
+              <span>Aucune transaction disponible.</span>
+            </div>
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
                 <thead>
