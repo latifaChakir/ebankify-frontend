@@ -60,3 +60,7 @@
   cursor: pointer;
 }
 
+.table .tbody {
+  display: table-row-group;
+  visibility: visible;
+}

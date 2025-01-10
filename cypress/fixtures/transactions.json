@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "type": "STARTED",
+    "amount": 100,
+    "status": "PENDING",
+    "sourceAccount": { "id": 1, "name": "Account 1" },
+    "destinationAccount": { "id": 2, "name": "Account 2" },
+    "nextExecutionDate": "2025-01-10"
+  },
+  {
+    "id": 2,
+    "type": "COMPLETED",
+    "amount": 200,
+    "status": "COMPLETED",
+    "sourceAccount": { "id": 1, "name": "Account 1" },
+    "destinationAccount": { "id": 3, "name": "Account 3" },
+    "nextExecutionDate": "2025-01-15"
+  }
+]
