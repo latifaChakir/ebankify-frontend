@@ -21,18 +21,18 @@ import {errorInterceptor} from "./core/interceptors/error.interceptor";
   imports: [
     AppRoutingModule,
     BrowserModule,
-    LayoutsModule,
     AuthModule,
-    AdminModule,
-    UserModule,
-    EmployeeModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       toastClass: 'custom-toast',
     }),
-    BrowserAnimationsModule,
+    LayoutsModule,
+    AdminModule,
+    UserModule,
+    EmployeeModule,
   ],
   providers: [
     provideHttpClient(
