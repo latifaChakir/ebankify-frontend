@@ -92,5 +92,25 @@
       </div>
     </div>
   </div>
+  <div class="row" STYLE="width: 900px !important; margin-left: 50px">
+    <div class="col-md-6">
+      <h5>Doughnut Chart</h5>
+      <canvas
+        baseChart
+        [data]="doughnutChartData"
+        [type]="doughnutChartType"
+        style="width: 400px; height: 300px;">
+      </canvas>
+    </div>
+    <div class="col-md-6">
+      <h5>Line Chart</h5>
+      <canvas
+        baseChart
+        [data]="lineChartData"
+        [type]="lineChartType"
+        style="width: 500px; height: 400px;">
+      </canvas>
+    </div>
+  </div>
 </main>
 

@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {AppComponent} from "./app.component";
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { LayoutsModule } from './layouts/layouts.module';
-import {AuthModule} from "./auth/auth.module";
-import {AppRoutingModule} from "./app-routing.module";
-import {HTTP_INTERCEPTORS, provideHttpClient,withInterceptors } from "@angular/common/http";
-import {ToastrModule} from "ngx-toastr";
-
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {AdminModule} from "./admin/admin.module";
-import {authInterceptor} from "./core/interceptors/auth.interceptor";
-import {UserModule} from "./user/user.module";
-import {EmployeeModule} from "./employee/employee.module";
-import {errorInterceptor} from "./core/interceptors/error.interceptor";
+import { AdminModule } from './admin/admin.module';
+import { UserModule } from './user/user.module';
+import { EmployeeModule } from './employee/employee.module';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
+    AppRoutingModule,
     AuthModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -35,9 +35,8 @@ import {errorInterceptor} from "./core/interceptors/error.interceptor";
     EmployeeModule,
   ],
   providers: [
-    provideHttpClient(
-      withInterceptors([authInterceptor, errorInterceptor])
-    ),
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    provideCharts(withDefaultRegisterables())
   ],
   bootstrap: [AppComponent]
 })

@@ -64,3 +64,42 @@
   display: table-row-group;
   visibility: visible;
 }
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 20px 0;
+}
+
+.loader-circle {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #4a90e2; /* Couleur du bord animé */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.alert.alert-danger {
+  color: #fff; /* Forcer le texte en blanc */
+  background-color: #dc3545; /* Conserver le rouge Bootstrap */
+  border-color: #dc3545; /* Conserver la bordure rouge */
+}
+.btn-close-white {
+  filter: invert(1);
+  color: white !important;
+  /* Change la couleur du bouton pour le rendre blanc */
+}
+.canvas {
+  width: 249px !important;  /* Force la largeur à 249px */
+  height: 249px !important; /* Force la hauteur à 249px */
+}
