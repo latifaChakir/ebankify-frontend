@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { User } from '../../core/models/user';
 import { SideComponent } from "../../layouts/side/side.component";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ActivatedRoute } from "@angular/router"; // Import this
+import { ActivatedRoute } from "@angular/router";
 
 describe('UserManagementComponent', () => {
   let component: UserManagementComponent;
@@ -15,7 +15,7 @@ describe('UserManagementComponent', () => {
 
   beforeEach(async () => {
     userServiceMock = {
-      getAllUsers: jasmine.createSpy('getAllUsers').and.returnValue(of([])), // Default return value to avoid undefined
+      getAllUsers: jasmine.createSpy('getAllUsers').and.returnValue(of([])),
       createUser: jasmine.createSpy('createUser'),
       updateUser: jasmine.createSpy('updateUser'),
       deleteUser: jasmine.createSpy('deleteUser'),

@@ -88,7 +88,7 @@
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         <form (ngSubmit)="saveLoan(selectedLoan)">
           <div class="form-group">
-            <label for="principal">Principal Amount</label>
+            <label for="principal">Principal Amount</label><span class="required-indicator">*</span>
             <input
               type="number"
               class="form-control"
@@ -100,7 +100,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="interestRate">Interest Rate (%)</label>
+            <label for="interestRate">Interest Rate (%)</label><span class="required-indicator">*</span>
             <input
               type="number"
               class="form-control"
@@ -112,7 +112,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="termMonths">Term (Months)</label>
+            <label for="termMonths">Term (Months)</label><span class="required-indicator">*</span>
             <input
               type="number"
               class="form-control"
@@ -124,7 +124,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="approved">Approved</label>
+            <label for="approved">Approved</label><span class="required-indicator">*</span>
             <select
               id="approved"
               class="form-control"
@@ -137,7 +137,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="user">User</label>
+            <label for="user">User</label><span class="required-indicator">*</span>
             <select
               id="user"
               class="form-control"

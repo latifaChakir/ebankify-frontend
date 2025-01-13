@@ -77,17 +77,31 @@ import {FormsModule} from "@angular/forms";
       destinationAccountId: transaction.destinationAccount?.id,
     };
 
-    if (this.selectedTransaction.id) {
-      this.transactionService.updateTransaction(this.selectedTransaction.id, payload).subscribe(() => {
+    const request$ = this.selectedTransaction.id
+      ? this.transactionService.updateTransaction(this.selectedTransaction.id, payload)
+      : this.transactionService.createTransaction(payload);
+
+    request$.subscribe(
+      () => {
         this.loadTransactions();
         this.closeModal();
-      });
-    } else {
-      this.transactionService.createTransaction(payload).subscribe(() => {
-        this.loadTransactions();
-        this.closeModal();
-      });
-    }
+        this.error = null; // Efface les erreurs en cas de succès
+      },
+      (error) => {
+        // Gérer les erreurs en fonction de la structure renvoyée par l'API
+        if (error.error?.details) {
+          this.error = Object.entries(error.error.details)
+            .map(([field, message]) => `${field}: ${message}`)
+            .join(', ');
+        } else if (error.error?.message) {
+          this.error = error.error.message; // Utilise le message spécifique
+        } else if (error.message) {
+          this.error = error.message; // Fallback en cas d'erreur générique
+        } else {
+          this.error = 'Une erreur est survenue.'; // Message par défaut
+        }
+      }
+    );
   }
 
   editTransaction(transaction: Transaction): void {
@@ -102,6 +116,7 @@ import {FormsModule} from "@angular/forms";
 
 
   deleteTransaction(transactionId: number): void {
+    console.log('Transaction ID à supprimer :', transactionId);
     this.transactionService.deleteTransaction(transactionId).subscribe(() => {
       this.loadTransactions();
     });

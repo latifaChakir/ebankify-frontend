@@ -87,19 +87,19 @@
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         <form (ngSubmit)="saveUser(selectedUser)">
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">Name</label><span class="required-indicator">*</span>
             <input type="text" class="form-control" [(ngModel)]="selectedUser.name" name="name" id="name" placeholder="Enter name" required>
           </div>
           <div class="form-group">
-            <label for="userEmail">Email</label>
+            <label for="userEmail">Email</label><span class="required-indicator">*</span>
             <input type="email" class="form-control" id="userEmail" [(ngModel)]="selectedUser.email" name="email" placeholder="Enter email" required>
           </div>
           <div class="form-group">
-            <label>Age</label>
+            <label>Age</label> <span class="required-indicator">*</span>
             <input type="number" id="age" class="form-control" [(ngModel)]="selectedUser.age" name="age" placeholder="Enter age" required>
           </div>
           <div class="form-group">
-            <label>Password</label>
+            <label>Password</label> <span class="required-indicator">*</span>
             <input type="password" id="password" class="form-control" name="password"[(ngModel)]="selectedUser.password" placeholder="Enter passcode" required>
           </div>
           <div class="form-group">
@@ -111,7 +111,7 @@
             <input type="number" id="creditScore" class="form-control" name="creditScore" [(ngModel)]="selectedUser.creditScore" placeholder="Enter credit score" required>
           </div>
           <div class="form-group">
-            <label for="roles">Role</label>
+            <label for="roles">Role</label><span class="required-indicator">*</span>
             <select id="roles" class="form-control" name="roles"  [(ngModel)]="selectedUser.roles" multiple required>
               <option [value]="1">Admin</option>
               <option [value]="2">User</option>

@@ -7,7 +7,6 @@
       <span class="text-white">{{ error }}</span>
       <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-
     <div class="row">
       <div class="col-12">
         <div class="card my-4">
@@ -105,13 +104,17 @@
 <div *ngIf="showModal" class="modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div *ngIf="error" class="error-message alert alert-danger alert-dismissible fade show" role="alert">
+        <span class="text-white">{{ error }}</span>
+        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
       <div class="modal-header">
         <h5 class="modal-title" id="transactionModalLabel">Manage Transaction</h5>
       </div>
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         <form (ngSubmit)="saveTransaction(selectedTransaction)">
           <div class="form-group">
-            <label for="type">Type</label>
+            <label for="type">Type</label><span class="required-indicator">*</span>
             <select class="form-control" id="type" [(ngModel)]="selectedTransaction.type" name="type" required>
               <option [value]="TransactionType.STARTED">Standard</option>
               <option [value]="TransactionType.INSTANT">Instant</option>
@@ -119,11 +122,11 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="amount">Amount</label>
+            <label for="amount">Amount</label><span class="required-indicator">*</span>
             <input type="number" class="form-control" id="amount" [(ngModel)]="selectedTransaction.amount" name="amount" placeholder="Enter amount" required>
           </div>
           <div class="form-group">
-            <label for="status">Status</label>
+            <label for="status">Status</label><span class="required-indicator">*</span>
             <select class="form-control" id="status" [(ngModel)]="selectedTransaction.status" name="status" required>
               <option [value]="TransactionStatus.PENDING">Pending</option>
               <option [value]="TransactionStatus.COMPLETED">Completed</option>
@@ -131,20 +134,20 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="sourceAccount">Source Account</label>
+            <label for="sourceAccount">Source Account</label><span class="required-indicator">*</span>
             <select class="form-control" id="sourceAccount" [(ngModel)]="selectedTransaction.sourceAccount" name="sourceAccountId" required>
               <option *ngFor="let account of accounts" [ngValue]="account">{{ account.accountNumber }}</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="destinationAccount">Destination Account</label>
+            <label for="destinationAccount">Destination Account</label><span class="required-indicator">*</span>
             <select class="form-control" id="destinationAccount" [(ngModel)]="selectedTransaction.destinationAccount" name="destinationAccountId" required>
               <option *ngFor="let account of accounts" [ngValue]="account">{{ account.accountNumber }}</option>
             </select>
           </div>
           <!-- Champ de date pour la prochaine exécution -->
           <div class="form-group" *ngIf="selectedTransaction.type === TransactionType.SCHEDULED">
-            <label for="nextExecutionDate">Next Execution Date</label>
+            <label for="nextExecutionDate">Next Execution Date</label><span class="required-indicator">*</span>
             <input type="date" class="form-control" id="nextExecutionDate" [(ngModel)]="selectedTransaction.nextExecutionDate" name="nextExecutionDate" required>
           </div>
           <div class="modal-footer">

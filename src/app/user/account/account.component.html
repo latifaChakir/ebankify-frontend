@@ -84,7 +84,7 @@
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         <form (ngSubmit)="saveAccount(selectedAccount)">
           <div class="form-group">
-            <label for="accountNumber">Account Number</label>
+            <label for="accountNumber">Account Number</label><span class="required-indicator">*</span>
             <input type="text" class="form-control" [(ngModel)]="selectedAccount.accountNumber" name="accountNumber" id="accountNumber" placeholder="Enter account number" required>
           </div>
           <div class="form-group">
@@ -92,14 +92,14 @@
             <input type="number" class="form-control" [(ngModel)]="selectedAccount.balance" name="balance" id="balance" placeholder="Enter balance" required>
           </div>
           <div class="form-group" *ngIf="isAdmin">
-            <label for="user">User</label>
+            <label for="user">User</label><span class="required-indicator">*</span>
             <select  id="user" class="form-control" name="userId" [(ngModel)]="selectedAccount.user" required>
               <option *ngFor="let user of users" [ngValue]="user">{{ user.name }}</option>
             </select>
           </div>
           <input *ngIf="!isAdmin" type="hidden" [(ngModel)]="selectedAccount.user" name="userId">
           <div class="form-group">
-            <label for="bank">Bank</label>
+            <label for="bank">Bank</label><span class="required-indicator">*</span>
             <select id="bank" class="form-control" name="bankId" [(ngModel)]="selectedAccount.bank" required>
               <option *ngFor="let bank of banks" [ngValue]="bank">{{ bank.name }}</option>
             </select>

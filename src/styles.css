@@ -92,7 +92,11 @@
 .alert.alert-danger {
   color: #fff; /* Forcer le texte en blanc */
   background-color: #dc3545; /* Conserver le rouge Bootstrap */
-  border-color: #dc3545; /* Conserver la bordure rouge */
+  border-color: #dc3545;
+  width: fit-content;
+  display: flex;
+  justify-content: flex-end;
+  /* Conserver la bordure rouge */
 }
 .btn-close-white {
   filter: invert(1);
@@ -102,4 +106,8 @@
 .canvas {
   width: 249px !important;  /* Force la largeur à 249px */
   height: 249px !important; /* Force la hauteur à 249px */
+}
+.required-indicator {
+  color: red;
+  margin-left: 4px;
 }
