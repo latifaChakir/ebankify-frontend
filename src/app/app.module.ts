@@ -14,6 +14,11 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import {httpErrorInterceptor} from "./core/interceptors/http-error.interceptor";
+import {StoreModule} from "@ngrx/store";
+import {transactionsReducer} from "./core/stores/transaction/transactions.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {TransactionsEffects} from "./core/stores/transaction/transactions.effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [
@@ -34,6 +39,11 @@ import {httpErrorInterceptor} from "./core/interceptors/http-error.interceptor";
     AdminModule,
     UserModule,
     EmployeeModule,
+    StoreModule.forRoot({
+      transactions: transactionsReducer,
+    }),
+    EffectsModule.forRoot([TransactionsEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor, httpErrorInterceptor])),
