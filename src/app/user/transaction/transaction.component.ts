@@ -113,8 +113,6 @@ import {FormsModule} from "@angular/forms";
     this.openModal();
   }
 
-
-
   deleteTransaction(transactionId: number): void {
     console.log('Transaction ID à supprimer :', transactionId);
     this.transactionService.deleteTransaction(transactionId).subscribe(() => {

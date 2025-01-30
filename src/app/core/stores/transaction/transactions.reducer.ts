@@ -18,31 +18,23 @@ export const transactionsReducer = createReducer(
   initialState,
   on(TransactionActions.loadTransactions, (state) => ({
     ...state,
-    loading: true,
+    loading: true,  // Pas de chargement depuis une API
     error: null,
   })),
-  on(TransactionActions.loadTransactionsSuccess, (state, { transactions }) => ({
-    ...state,
-    transactions,
-    loading: false,
-  })),
-  on(TransactionActions.loadTransactionsFailure, (state, { error }) => ({
-    ...state,
-    loading: false,
-    error,
-  })),
-  on(TransactionActions.addTransactionSuccess, (state, { transaction }) => ({
+  on(TransactionActions.addTransaction, (state, { transaction }) => ({
     ...state,
     transactions: [...state.transactions, transaction],
   })),
-  on(TransactionActions.updateTransactionSuccess, (state, { transaction }) => ({
+  on(TransactionActions.updateTransaction, (state, { id, transaction }) => ({
     ...state,
     transactions: state.transactions.map((t) =>
-      t.id === transaction.id ? transaction : t
+      t.id === id ? { ...t, ...transaction } : t
     ),
   })),
-  on(TransactionActions.deleteTransactionSuccess, (state, { id }) => ({
+  on(TransactionActions.deleteTransaction, (state, { id }) => ({
     ...state,
     transactions: state.transactions.filter((t) => t.id !== id),
   }))
+
+
 );
