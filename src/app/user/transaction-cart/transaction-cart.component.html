@@ -10,9 +10,19 @@
             <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
               <div class="d-flex justify-content-between">
                 <h6 class="text-white text-capitalize ps-3">Transactions-Cart table</h6>
-                <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
-                  <span class="material-symbols-rounded mx-3 text-white">add</span>
-                </button>
+
+                <div class="buttons">
+                  <button (click)="openModal()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                    <span class="material-symbols-rounded mx-3 text-white">add</span>
+                  </button>
+                  <button (click)="resetCart()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                    <span class="material-symbols-rounded mx-3 text-white">restart_alt</span>
+                  </button>
+                  <button (click)="saveAllToDatabase()" class="text-secondary font-weight-bold  border-0 text-xs" style="background: none;" data-toggle="tooltip" data-original-title="Add user" data-toggle="modal" data-target="#addUserModal">
+                    <span class="material-symbols-rounded mx-3 text-white">save</span>
+                  </button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -82,7 +92,7 @@
                     <button (click)="editTransaction(transaction)" class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                       <span class="material-symbols-rounded text-warning">edit</span>
                     </button>
-                    <button (click)="logTransactionId(transaction.id); transaction.id ? deleteTransaction(transaction.id) : null" class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                    <button (click)="transaction.id ? deleteTransaction(transaction.id) : null" class="text-secondary bg-body border-0 font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                       <span class="material-symbols-rounded mx-1 text-danger">delete</span>
                     </button>
                   </td>

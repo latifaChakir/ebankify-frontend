@@ -144,8 +144,54 @@ export class TransactionCartComponent implements OnInit {
   closeModal(): void {
     this.showModal = false;
   }
-  logTransactionId(id: number | undefined): void {
-    console.log('ID de la transaction à supprimer :', id);
+  resetCart(): void {
+    this.transactions.forEach(transaction => {
+      if (transaction.id !== undefined) {
+        this.store.dispatch(TransactionActions.deleteTransaction({ id: transaction.id }));
+      } else {
+        console.error("Transaction sans ID détectée, suppression ignorée :", transaction);
+      }
+    });
+    console.log("Toutes les transactions ont été supprimées.");
+  }
+
+  saveAllToDatabase(): void {
+    this.transactionService.getAllTransaction().subscribe(existingTransactions => {
+      const existingIds = new Set(existingTransactions.map(t => t.id));
+
+      const newTransactions: Transaction[] = this.transactions.filter(transaction => !existingIds.has(transaction.id));
+
+      if (newTransactions.length === 0) {
+        console.log("Aucune nouvelle transaction à sauvegarder.");
+        return;
+      }
+
+      newTransactions.forEach(transaction => {
+        const payload = {
+          ...transaction,
+          sourceAccountId: transaction.sourceAccount?.id, // Récupère l'ID du compte source
+          destinationAccountId: transaction.destinationAccount?.id, // Récupère l'ID du compte de destination
+        };
+
+        this.transactionService.createTransaction(payload).subscribe({
+          next: () => console.log(`Transaction ${transaction.id} sauvegardée avec succès.`),
+          error: (error) => {
+            // Gérer les erreurs en fonction de la structure renvoyée par l'API
+            if (error.error?.details) {
+              console.error(Object.entries(error.error.details)
+                .map(([field, message]) => `${field}: ${message}`)
+                .join(', '));
+            } else if (error.error?.message) {
+              console.error(error.error.message);
+            } else if (error.message) {
+              console.error(error.message);
+            } else {
+              console.error('Une erreur est survenue.');
+            }
+          },
+        });
+      });
+    });
   }
 
   protected readonly TransactionType = TransactionType;

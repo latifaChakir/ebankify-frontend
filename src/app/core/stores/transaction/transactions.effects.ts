@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of,  switchMap } from 'rxjs';
 import {TransactionService} from "../../services/transaction/transaction.service";
 import * as TransactionActions from './transactions.actions';
+
 
 @Injectable()
 export class TransactionsEffects {
@@ -11,37 +12,38 @@ export class TransactionsEffects {
     private transactionService: TransactionService
   ) {}
 
-  loadTransactions$ = createEffect(() =>
+  LoadTransactions = createEffect(() =>
     this.actions$.pipe(
       ofType(TransactionActions.loadTransactions),
-      mergeMap(() =>
+      switchMap(() =>
         this.transactionService.getAllTransaction().pipe(
-          map((transactions) =>
-            TransactionActions.loadTransactionsSuccess({ transactions })
-          ),
-          catchError((error) =>
-            of(TransactionActions.loadTransactionsFailure({ error: error.message }))
-          )
+          map((transactions) => TransactionActions.loadTransactionsSuccess({ transactions })),
+          catchError((error) => of(TransactionActions.loadTransactionsFailure({ error: error.message })))
         )
       )
     )
   );
 
-  addTransaction$ = createEffect(() =>
+  AddTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(TransactionActions.addTransaction),
-      mergeMap(({ transaction }) =>
+      switchMap(({ transaction }) =>
         this.transactionService.createTransaction(transaction).pipe(
-          map((newTransaction) =>
-            TransactionActions.addTransactionSuccess({ transaction: newTransaction })
-          ),
-          catchError((error) =>
-            of(TransactionActions.addTransactionFailure({ error: error.message }))
-          )
+          map((transaction) => TransactionActions.addTransactionSuccess({ transaction })),
+          catchError((error) => of(TransactionActions.addTransactionFailure({ error: error.message })))
         )
       )
     )
   );
+
+  addTransactionSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TransactionActions.addTransaction),
+      map(() => TransactionActions.loadTransactions())
+    )
+  );
+
+
 
   updateTransaction$ = createEffect(() =>
     this.actions$.pipe(
